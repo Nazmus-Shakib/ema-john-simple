@@ -10,12 +10,16 @@ import Product from "../Product/Product";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import Cart from "../Cart/Cart";
 import happyImage from "../../images/giphy.gif";
+import { Link } from "react-router-dom";
+import { useAuth } from "../LogIn/useAuth";
 
 const Review = () => {
   // to get data from or manage cart.js
   const [cart, setCart] = useState([]);
 
   const [orderPlaced, setOrderPlaced] = useState(false);
+
+  const auth = useAuth(); // calling custom hook from UseAuth
 
   const handlePlaceOrder = () => {
     setCart([]);
@@ -64,13 +68,23 @@ const Review = () => {
         ))}
 
         {thankYou}
+
+        {!cart.length && (
+          <h1>
+            Your Cart is Empty!!! <a href="/shop">Keep Shopping</a>
+          </h1>
+        )}
       </div>
 
       <div className="cart-container">
         <Cart cart={cart}>
-          <button className="main-button" onClick={handlePlaceOrder}>
-            Place Order
-          </button>
+          <Link to="/shipment">
+            {auth.user ? (
+              <button className="main-button">Proceed to Checkout</button>
+            ) : (
+              <button className="main-button">Log In to Proceed</button>
+            )}
+          </Link>
         </Cart>
       </div>
     </div>
