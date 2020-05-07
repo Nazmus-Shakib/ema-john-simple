@@ -1,5 +1,4 @@
 import React from "react";
-import fakeData from "../../fakeData";
 import { useState } from "react";
 import "./Shop.css";
 import Product from "../Product/Product";
@@ -12,22 +11,32 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Shop = () => {
-  const first10 = fakeData.slice(0, 10); // to load data from fakedata
-  const [products, setProducts] = useState(first10);
-
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+
+  // to load data from mongodb database
+  useEffect(() => {
+    fetch("http://localhost:3001/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+      });
+  }, []);
 
   useEffect(() => {
     const savedCart = getDatabaseCart();
     const productKeys = Object.keys(savedCart);
-    const previousCart = productKeys.map((existingKey) => {
-      const product = fakeData.find((pd) => pd.key === existingKey); //How will you get an object from an array of objects using an object property value
-      product.quantity = savedCart[existingKey]; // savedCart is a object and we pass existing key to get quantity values
-      return product;
-    });
 
-    setCart(previousCart);
-  }, []);
+    if (products.length > 0) {
+      const previousCart = productKeys.map((existingKey) => {
+        const product = products.find((pd) => pd.key === existingKey); //How will you get an object from an array of objects using an object property value
+        product.quantity = savedCart[existingKey]; // savedCart is a object and we pass existing key to get quantity values
+        return product;
+      });
+
+      setCart(previousCart);
+    }
+  }, [products]);
 
   const handleAddProduct = (product) => {
     // to store product (how much product) data in local storage and set quantity
