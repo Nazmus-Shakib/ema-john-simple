@@ -5,7 +5,7 @@ const Inventory = () => {
   const handleAddInventory = () => {
     // //const product = fakeData[0];
     // console.log("Before Post", fakeData.length);
-    // fetch("http://localhost:3001/addProduct", {
+    // fetch("https://ema-john-simple-by-shakib.herokuapp.com/addProduct", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",

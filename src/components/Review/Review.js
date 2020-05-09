@@ -28,7 +28,7 @@ const Review = () => {
     const savedCart = getDatabaseCart();
     const productKeys = Object.keys(savedCart); // to find the selected items key property addresses that is stored in local storage.  (we can also use object.values to get key property values)
 
-    fetch("http://localhost:3001/getProductsByKey", {
+    fetch("https://ema-john-simple-by-shakib.herokuapp.com/getProductsByKey", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const Review = () => {
         <Cart cart={cart}>
           <Link to="/shipment">
             {auth.user ? (
-              <button className="main-button">Proceed to Checkout</button>
+              <button className="main-button">Proceed Checkout</button>
             ) : (
               <button className="main-button">Log In to Proceed</button>
             )}

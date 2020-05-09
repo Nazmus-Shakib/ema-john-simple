@@ -16,7 +16,7 @@ const Shop = () => {
 
   // to load data from mongodb database
   useEffect(() => {
-    fetch("http://localhost:3001/products")
+    fetch("https://ema-john-simple-by-shakib.herokuapp.com/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
